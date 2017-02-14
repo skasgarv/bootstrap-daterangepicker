@@ -55,6 +55,7 @@
         if (this.element.hasClass('pull-right'))
             this.opens = 'left';
 
+        this.firstDateNoChangeMode = options.firstDateNoChangeMode;
         this.drops = 'down';
         if (this.element.hasClass('dropup'))
             this.drops = 'up';
@@ -1260,10 +1261,16 @@
             var cal = $(e.target).parents('.calendar');
             var date = cal.hasClass('left') ? this.leftCalendar.calendar[row][col] : this.rightCalendar.calendar[row][col];
 
-            if (this.endDate && !this.container.find('input[name=daterangepicker_start]').is(":focus")) {
-                this.container.find('input[name=daterangepicker_start]').val(date.format(this.locale.format));
-            } else if (!this.endDate && !this.container.find('input[name=daterangepicker_end]').is(":focus")) {
-                this.container.find('input[name=daterangepicker_end]').val(date.format(this.locale.format));
+            if(this.firstDateNoChangeMode){
+                if(!this.endDate){
+                    this.container.find('input[name=daterangepicker_end]').val(date.format(this.locale.format));
+                }
+            }else{
+                if (this.endDate && !this.container.find('input[name=daterangepicker_start]').is(":focus")) {
+                    this.container.find('input[name=daterangepicker_start]').val(date.format(this.locale.format));
+                } else if (!this.endDate && !this.container.find('input[name=daterangepicker_end]').is(":focus")) {
+                    this.container.find('input[name=daterangepicker_end]').val(date.format(this.locale.format));
+                }
             }
 
             //highlight the dates between the start date and the date being hovered as a potential end date
@@ -1287,10 +1294,8 @@
                     } else {
                         $(el).removeClass('in-range');
                     }
-
                 });
             }
-
         },
 
         clickDate: function(e) {
