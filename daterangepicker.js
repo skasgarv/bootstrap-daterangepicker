@@ -54,7 +54,9 @@
         this.opens = 'right';
         if (this.element.hasClass('pull-right'))
             this.opens = 'left';
+
         this.this.firstDateNoChangeMode = options.firstDateNoChangeMode;
+
         this.drops = 'down';
         if (this.element.hasClass('dropup'))
             this.drops = 'up';
